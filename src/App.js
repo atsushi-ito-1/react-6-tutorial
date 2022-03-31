@@ -1,7 +1,10 @@
 /* src/App.js */
 import React, { useEffect, useState } from "react";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import { createNote } from "./graphql/mutations";
+import {
+  createNote,
+  deleteNote as deleteNoteMutation,
+} from "./graphql/mutations";
 import { listNotes } from "./graphql/queries";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
@@ -44,6 +47,15 @@ const App = () => {
     }
   }
 
+  async function deleteNote({ id }) {
+    const newNotesArray = notes.filter((note) => note.id !== id);
+    setNotes(newNotesArray);
+    await API.graphql({
+      query: deleteNoteMutation,
+      variables: { input: { id } },
+    });
+  }
+
   return (
     <Authenticator>
       {({ signOut, user }) => (
@@ -73,6 +85,7 @@ const App = () => {
             <div key={note.id ? note.id : index} style={styles.note}>
               <p style={styles.noteName}>{note.name}</p>
               <p style={styles.noteDescription}>{note.description}</p>
+              <button onClick={() => deleteNote(note)}>Delte Note</button>
             </div>
           ))}
         </div>
