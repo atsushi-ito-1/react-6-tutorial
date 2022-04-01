@@ -1,11 +1,8 @@
 /* src/App.js */
 import React, { useEffect, useState } from "react";
 import Amplify, { API, graphqlOperation } from "aws-amplify";
-import {
-  createNote,
-  deleteNote as deleteNoteMutation,
-} from "./graphql/mutations";
-import { listNotes } from "./graphql/queries";
+import * as Mutation from "./graphql/mutations";
+import * as Query from "./graphql/queries";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./aws-exports";
@@ -27,7 +24,7 @@ const App = () => {
 
   async function fetchNotes() {
     try {
-      const noteData = await API.graphql(graphqlOperation(listNotes));
+      const noteData = await API.graphql(graphqlOperation(Query.listNotes));
       const notes = noteData.data.listNotes.items;
       setNotes(notes);
     } catch (err) {
@@ -41,19 +38,23 @@ const App = () => {
       const note = { ...formState };
       setNotes([...notes, note]);
       setFormState(initialState);
-      await API.graphql(graphqlOperation(createNote, { input: note }));
+      await API.graphql(graphqlOperation(Mutation.createNote, { input: note }));
     } catch (err) {
       console.log("error creating note:", err);
     }
   }
 
   async function deleteNote({ id }) {
-    const newNotesArray = notes.filter((note) => note.id !== id);
-    setNotes(newNotesArray);
-    await API.graphql({
-      query: deleteNoteMutation,
-      variables: { input: { id } },
-    });
+    try {
+      const newNotesArray = notes.filter((note) => note.id !== id);
+      setNotes(newNotesArray);
+      await API.graphql({
+        query: Mutation.deleteNote,
+        variables: { input: { id } },
+      });
+    } catch (err) {
+      console.log("error deleting note:", err);
+    }
   }
 
   return (
