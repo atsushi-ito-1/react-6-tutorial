@@ -61,10 +61,9 @@ const App = () => {
     try {
       const newNotesArray = notes.filter((note) => note.id !== id);
       setNotes(newNotesArray);
-      await API.graphql({
-        query: Mutation.deleteNote,
-        variables: { input: { id } },
-      });
+      await API.graphql(
+        graphqlOperation(Mutation.deleteNote, { input: { id } })
+      );
     } catch (err) {
       console.log("error deleting note:", err);
     }
@@ -106,8 +105,10 @@ const App = () => {
           </button>
           {notes.map((note, index) => (
             <div key={note.id ? note.id : index} style={styles.note}>
-              <p style={styles.noteName}>{note.name}</p>
-              <p style={styles.noteDescription}>{note.description}</p>
+              <p>
+                <div style={styles.noteName}>{note.name}</div>
+                <div style={styles.noteDescription}>{note.description}</div>
+              </p>
               <button onClick={() => deleteNote(note)}>Delte Note</button>
               {note.image && (
                 <img src={note.image} style={{ width: 400 }} alt={note.name} />
