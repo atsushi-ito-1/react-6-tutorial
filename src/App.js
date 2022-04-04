@@ -8,10 +8,9 @@ import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
-const initialState = { name: "", description: "" };
-
+const initialFormState = { name: "", description: "" };
 const App = () => {
-  const [formState, setFormState] = useState(initialState);
+  const [formState, setFormState] = useState(initialFormState);
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const App = () => {
       if (!formState.name || !formState.description) return;
       const note = { ...formState };
       setNotes([...notes, note]);
-      setFormState(initialState);
+      setFormState(initialFormState);
       await API.graphql(graphqlOperation(Mutation.createNote, { input: note }));
     } catch (err) {
       console.log("error creating note:", err);
