@@ -1,16 +1,13 @@
 {
   "files": {
-    "main.css": "/react-6-tutorial/static/css/main.25f7093a.css",
-    "main.js": "/react-6-tutorial/static/js/main.bb4501c0.js",
-    "static/js/787.49c964e2.chunk.js": "/react-6-tutorial/static/js/787.49c964e2.chunk.js",
+    "main.css": "/react-6-tutorial/static/css/main.7fa9d03f.css",
+    "main.js": "/react-6-tutorial/static/js/main.5427f999.js",
+    "static/js/27.344d88f1.chunk.js": "/react-6-tutorial/static/js/27.344d88f1.chunk.js",
     "service-worker.js": "/react-6-tutorial/service-worker.js",
-    "index.html": "/react-6-tutorial/index.html",
-    "main.25f7093a.css.map": "/react-6-tutorial/static/css/main.25f7093a.css.map",
-    "main.bb4501c0.js.map": "/react-6-tutorial/static/js/main.bb4501c0.js.map",
-    "787.49c964e2.chunk.js.map": "/react-6-tutorial/static/js/787.49c964e2.chunk.js.map"
+    "index.html": "/react-6-tutorial/index.html"
   },
   "entrypoints": [
-    "static/css/main.25f7093a.css",
-    "static/js/main.bb4501c0.js"
+    "static/css/main.7fa9d03f.css",
+    "static/js/main.5427f999.js"
   ]
 }
